@@ -1,31 +1,38 @@
+#pragma once
 #include <stdio.h>
 #include <vector>
+
+using namespace std;
 namespace ariel
 {
     class MagicalContainer
     {
     private:
-        std::vector<int> mContainer;
+        vector<int> mContainer;
 
     public:
         MagicalContainer();
-
+        ~MagicalContainer();
         void addElement(int element);
         void removeElement(int element);
         int size();
 
         class AscendingIterator
         {
+        private:
+            const MagicalContainer *container;
+            size_t index;
+
         public:
-            AscendingIterator() = default;
+            AscendingIterator();
             AscendingIterator(const AscendingIterator &other);
-            AscendingIterator(MagicalContainer mgcContainer);
+            AscendingIterator(const MagicalContainer &mgcContainer);
             ~AscendingIterator();
-            AscendingIterator operator&(const AscendingIterator &iter);
-            bool operator==(const AscendingIterator &iter)const;
-            bool operator!=(const AscendingIterator &iter) const;
-            bool operator<(const AscendingIterator &iter) const;
-            bool operator>(const AscendingIterator &iter) const;
+            AscendingIterator &operator=(const AscendingIterator &other);
+            bool operator==(const AscendingIterator &other) const;
+            bool operator!=(const AscendingIterator &other) const;
+            bool operator<(const AscendingIterator &other) const;
+            bool operator>(const AscendingIterator &other) const;
             int operator*();
             AscendingIterator operator++();
             AscendingIterator begin();
@@ -34,16 +41,20 @@ namespace ariel
 
         class SideCrossIterator
         {
+        private:
+            const MagicalContainer *container;
+            size_t index;
+
         public:
-            SideCrossIterator() = default;
+            SideCrossIterator();
             SideCrossIterator(const SideCrossIterator &other);
-            SideCrossIterator(MagicalContainer mgcContainer);
+            SideCrossIterator(const MagicalContainer &mgcContainer);
             ~SideCrossIterator();
-            SideCrossIterator operator&(const SideCrossIterator &iter);
-            bool operator==(const SideCrossIterator &iter) const;
-            bool operator!=(const SideCrossIterator &iter) const;
-            bool operator<(const SideCrossIterator &iter) const;
-            bool operator>(const SideCrossIterator &iter) const;
+            SideCrossIterator &operator=(const SideCrossIterator &other);
+            bool operator==(const SideCrossIterator &other) const;
+            bool operator!=(const SideCrossIterator &other) const;
+            bool operator<(const SideCrossIterator &other) const;
+            bool operator>(const SideCrossIterator &other) const;
             int operator*();
             SideCrossIterator operator++();
             SideCrossIterator begin();
@@ -52,16 +63,20 @@ namespace ariel
 
         class PrimeIterator
         {
+        private:
+            const MagicalContainer *container;
+            size_t index;
+
         public:
-            PrimeIterator() = default;
-            PrimeIterator(MagicalContainer mgcContainer);
+            PrimeIterator();
             PrimeIterator(const PrimeIterator &other);
+            PrimeIterator(const MagicalContainer &mgcContainer);
             ~PrimeIterator();
-            PrimeIterator operator&(const PrimeIterator &iter);
-            bool operator==(const PrimeIterator &iter) const;
-            bool operator!=(const PrimeIterator &iter) const;
-            bool operator<(const PrimeIterator &iter) const;
-            bool operator>(const PrimeIterator &iter) const;
+            PrimeIterator &operator=(const PrimeIterator &other);
+            bool operator==(const PrimeIterator &other) const;
+            bool operator!=(const PrimeIterator &other) const;
+            bool operator<(const PrimeIterator &other) const;
+            bool operator>(const PrimeIterator &other) const;
             int operator*();
             PrimeIterator operator++();
             PrimeIterator begin();
