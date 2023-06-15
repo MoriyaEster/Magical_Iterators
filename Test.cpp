@@ -71,7 +71,7 @@ TEST_CASE("AscendingIterator")
     {
         MagicalContainer emptyContainer;
         MagicalContainer::AscendingIterator it(emptyContainer);
-        CHECK(it == it.end());
+        CHECK(it == it.begin());
     }
 
     SUBCASE("Copy constructor")
@@ -112,12 +112,12 @@ TEST_CASE("AscendingIterator")
         CHECK(*it == 15);
         ++it;
         CHECK(*it == 20);
-        ++it;
-        CHECK(*it == 25);
-        ++it;
+        ++(++it);
         CHECK(*it == 30);
         ++it;
         CHECK(it == it.end());
+
+        CHECK_THROWS(++it);
     }
 
     SUBCASE("Inequality operator")
@@ -133,15 +133,6 @@ TEST_CASE("AscendingIterator")
         CHECK(!(it1 != it2));
     }
 
-    SUBCASE("Dereference operator")
-    {
-        MagicalContainer::AscendingIterator it(container);
-        CHECK(*it == 10);
-
-        ++(++it);
-        CHECK(*it == 30);
-    }
-
     SUBCASE("Pre-increment operator")
     {
         MagicalContainer::AscendingIterator it(container);
@@ -150,24 +141,18 @@ TEST_CASE("AscendingIterator")
         CHECK(it == it.end());
     }
 
-    SUBCASE("Begin iterator points to the first element")
-    {
-        MagicalContainer::AscendingIterator it(container);
-        CHECK(*it == 10);
-    }
-
     SUBCASE("AscendingIterator comparison: < operator")
     {
         MagicalContainer::AscendingIterator it1(container);
         MagicalContainer::AscendingIterator it2(container);
 
-        CHECK_FALSE(it1 < it1); 
+        CHECK_FALSE(it1 < it1);
 
-        CHECK_FALSE(it1 < ++it2); 
-        CHECK(++it1 < it2);      
+        CHECK_FALSE(it1 < ++it2);
+        CHECK(++it1 < it2);
 
         CHECK_FALSE(it1 < it2.end());
-        CHECK(it1 < ++it2);           
+        CHECK(it1 < ++it2);
     }
 }
 
@@ -187,7 +172,7 @@ TEST_CASE("SideCrossIterator")
     {
         MagicalContainer emptyContainer;
         MagicalContainer::SideCrossIterator it(emptyContainer);
-        CHECK(it == it.end());
+        CHECK(it == it.begin());
     }
 
     SUBCASE("Copy constructor")
@@ -213,12 +198,12 @@ TEST_CASE("SideCrossIterator")
         CHECK(*it == 10);
         ++it;
         CHECK(*it == 40);
-        ++it;
+        ++(++it);
         CHECK(*it == 20);
         ++it;
-        CHECK(*it == 30);
-        ++it;
         CHECK(it == it.end());
+
+        CHECK_THROWS(++it);
     }
 
     SUBCASE("Equality operator")
@@ -247,15 +232,6 @@ TEST_CASE("SideCrossIterator")
         CHECK(!(it1 != it2));
     }
 
-    SUBCASE("Dereference operator")
-    {
-        MagicalContainer::SideCrossIterator it(container);
-        CHECK(*it == 10);
-
-        ++(++it);
-        CHECK(*it == 30);
-    }
-
     SUBCASE("Pre-increment operator")
     {
         MagicalContainer::SideCrossIterator it(container);
@@ -263,24 +239,19 @@ TEST_CASE("SideCrossIterator")
         CHECK(*++it == 30);
         CHECK(it == it.end());
     }
-    SUBCASE("Begin iterator points to the first element")
-    {
-        MagicalContainer::SideCrossIterator it(container);
-        CHECK(*it == 10);
-    }
 
     SUBCASE("SideCrossIterator comparison: < operator")
     {
         MagicalContainer::SideCrossIterator it1(container);
         MagicalContainer::SideCrossIterator it2(container);
 
-        CHECK_FALSE(it1 < it1); 
+        CHECK_FALSE(it1 < it1);
 
-        CHECK_FALSE(it1 < ++it2); 
-        CHECK(++it1 < it2);      
+        CHECK_FALSE(it1 < ++it2);
+        CHECK(++it1 < it2);
 
-        CHECK_FALSE(it1 < it2.end()); 
-        CHECK(it1 < ++it2);           
+        CHECK_FALSE(it1 < it2.end());
+        CHECK(it1 < ++it2);
     }
 }
 
@@ -300,7 +271,7 @@ TEST_CASE("PrimeIterator")
     {
         MagicalContainer emptyContainer;
         MagicalContainer::PrimeIterator it(emptyContainer);
-        CHECK(it == it.end());
+        CHECK(it == it.begin());
     }
 
     SUBCASE("Copy constructor")
@@ -330,6 +301,8 @@ TEST_CASE("PrimeIterator")
         CHECK(*it == 5);
         ++it;
         CHECK(it == it.end());
+
+        CHECK_THROWS(++it);
     }
 
     SUBCASE("Equality operator")
@@ -375,23 +348,17 @@ TEST_CASE("PrimeIterator")
         CHECK(it == it.end());
     }
 
-    SUBCASE("Begin iterator points to the first element")
-    {
-        MagicalContainer::SideCrossIterator it(container);
-        CHECK(*it == 10);
-    }
-
     SUBCASE("SideCrossIterator comparison: < operator")
     {
         MagicalContainer::SideCrossIterator it1(container);
         MagicalContainer::SideCrossIterator it2(container);
 
-        CHECK_FALSE(it1 < it1); 
+        CHECK_FALSE(it1 < it1);
 
-        CHECK_FALSE(it1 < ++it2); 
-        CHECK(++it1 < it2);       
-        CHECK_FALSE(it1 < it2.end()); 
-        CHECK(it1 < ++it2);           
+        CHECK_FALSE(it1 < ++it2);
+        CHECK(++it1 < it2);
+        CHECK_FALSE(it1 < it2.end());
+        CHECK(it1 < ++it2);
     }
 
     SUBCASE("SideCrossIterator comparison: > operator")
@@ -399,12 +366,12 @@ TEST_CASE("PrimeIterator")
         MagicalContainer::SideCrossIterator it1(container);
         MagicalContainer::SideCrossIterator it2(container);
 
-        CHECK_FALSE(it1 > it1); 
+        CHECK_FALSE(it1 > it1);
 
-        CHECK(it2 > ++it1);       
-        CHECK_FALSE(++it1 > it2);  
+        CHECK(it2 > ++it1);
+        CHECK_FALSE(++it1 > it2);
 
-        CHECK(it2.end() > it1);   
-        CHECK_FALSE(++it2 > it1);  
+        CHECK(it2.end() > it1);
+        CHECK_FALSE(++it2 > it1);
     }
 }
